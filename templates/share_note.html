@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ note.title }} - Shared Note</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2000&q=80') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+
+        .share-container {
+            position: relative;
+            z-index: 2;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 50px;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            animation: fadeInScale 0.6s ease-out forwards;
+        }
+
+        @keyframes fadeInScale {
+            0% {
+                opacity: 0;
+                transform: scale(0.95) translateY(20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .note-title {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            letter-spacing: -0.5px;
+            border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+            padding-bottom: 15px;
+        }
+
+        .note-meta {
+            font-size: 13px;
+            color: #6c757d;
+            margin-bottom: 25px;
+        }
+
+        .note-description {
+            color: #495057;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            white-space: pre-wrap;
+            background: rgba(255, 255, 255, 0.5);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .btn-download {
+            background: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+            border: none;
+            color: white;
+            box-shadow: 0 4px 15px rgba(79, 172, 254, 0.4);
+            border-radius: 8px;
+            font-weight: 500;
+            padding: 10px 25px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-download:hover {
+            transform: translateY(-2px);
+            color: white;
+            box-shadow: 0 6px 20px rgba(79, 172, 254, 0.6);
+        }
+
+        .shared-badge {
+            display: inline-block;
+            background: rgba(99, 102, 241, 0.1);
+            color: #6366f1;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .footer-link {
+            display: block;
+            text-align: center;
+            margin-top: 30px;
+            color: #6c757d;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .footer-link:hover {
+            color: #4facfe;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="overlay"></div>
+    <div class="share-container">
+        <div class="shared-badge">Shared Note</div>
+        <h2 class="note-title">{{ note.title }}</h2>
+
+        <div class="note-meta">
+            Shared by <strong>{{ note.user.username }}</strong> on {{ note.created|date:"M d, Y" }}
+        </div>
+
+        <div class="note-description">{{ note.description }}</div>
+
+        {% if note.file %}
+        <div class="text-center mt-4">
+            <h6 class="mb-3 text-muted">Attachment Available</h6>
+            <a href="{{ note.file.url }}" class="btn btn-download">Download Attachment</a>
+        </div>
+        {% endif %}
+
+        <a href="/" class="footer-link">Powered by NotesCloud</a>
+    </div>
+</body>
+
+</html>
